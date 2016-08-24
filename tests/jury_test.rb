@@ -3,7 +3,7 @@ require_relative "../lib/contestant"
 require_relative "../lib/jury"
 
 class TestJury < Minitest::Test
-
+  #Here, I'd say that the test is defining its own variables. 
   def setup
     @jury_members = %w(carlos walter aparna trinh diego juliana poornima)
     @jury_members.map!{ |member| Contestant.new(member) }
@@ -11,28 +11,22 @@ class TestJury < Minitest::Test
     @finalists.map!{ |member| Contestant.new(member) }
     @jury = Jury.new
   end
-
   def test_add_members_to_jury
     @jury.add_member(@jury_members.first)
     assert_includes @jury.members, @jury_members.first
   end
-
   #=====Remember to uncomment one test method at a time.=====
-
-  # def test_jury_starts_as_empty_array
-  #   jury = Jury.new
-  #   assert_empty jury.members
-  # end
-  #
-  # def test_cast_votes_returns_hash
-  #   assert_kind_of Hash, @jury.cast_votes(@finalists)
-  # end
-  #
-  # def test_cast_votes_hash_includes_two_finalists
-  #   @jury.members = @jury_members
-  #   assert_equal 2, @jury.cast_votes(@finalists).length
-  # end
-  #
+  def test_jury_starts_as_empty_array
+    jury = Jury.new
+    assert_empty jury.members
+  end
+  def test_cast_votes_returns_hash
+    assert_kind_of Hash, @jury.cast_votes(@finalists)
+  end
+  def test_cast_votes_hash_includes_two_finalists
+    @jury.members = @jury_members
+    assert_equal 2, @jury.cast_votes(@finalists).length
+  end
   # def test_cast_votes_every_member_vote_puts_to_terminal
   #   @jury.members = @jury_members
   #   output = capture_io do
