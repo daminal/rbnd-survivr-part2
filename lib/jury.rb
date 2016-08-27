@@ -1,4 +1,4 @@
-class Jury
+class Jury	
 	attr_accessor :members
 	
 	def initialize
@@ -8,19 +8,15 @@ class Jury
 		@members  << member
 	end
 	def cast_votes(finalists) 
-		puts "*"*200
-		puts finalists
 		votes = {}
   	finalists.each do |finalist|
     		votes[finalist] = 0 
   	end
-  	puts votes
   	@members.each do |member| 
   		vote = votes.keys.sample 
-  		puts "#{member.to_s} voted for #{vote.to_s}."
+  		puts "#{member.to_s.capitalize} voted for #{vote.to_s.capitalize}."
   		votes[vote] += 1
 		end
-		puts votes
   	return votes
   end
 	def report_votes(final_votes)

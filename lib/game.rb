@@ -12,10 +12,9 @@ class Game
 		tribes.sample
 	end
 	def clear_tribes
-		tribes = []
+		tribes.clear
 	end
 	def merge(new_name)
-		puts tribes
 		contestants = tribes.map(&:members).flatten
 		Tribe.new(name: "new_name", members: contestants)
 	end
