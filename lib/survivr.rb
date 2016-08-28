@@ -26,8 +26,7 @@ def phase_one
 	contestants_eliminated = []
 	8.times do
 		losing_tribe = @borneo.immunity_challenge
-		losing_contestant = losing_tribe.tribal_council
-		contestants_eliminated.push losing_contestant.name.capitalize
+		contestants_eliminated.push losing_tribe.tribal_council
 	end
 	@merge_tribe = @borneo.merge("Cello") # After 8 eliminations, merge the two tribes together
 	@borneo.clear_tribes
@@ -40,7 +39,7 @@ def phase_two
 	@jury = Jury.new
 	contestants_eliminated = []
 	3.times do
-		losing_contestant = @merge_tribe.members.delete(@merge_tribe.members.sample).name.capitalize
+		losing_contestant = @merge_tribe.tribal_council.name.capitalize
 		puts "#{losing_contestant} has been voted off the #{@merge_tribe} tribe."
 		contestants_eliminated.push losing_contestant
 	end
@@ -51,12 +50,12 @@ def phase_three
 	print_art('Phase 3')
 	@jury = Jury.new
 	7.times do
-		loser = @merge_tribe.members.delete(@merge_tribe.members.sample)
+		loser = @merge_tribe.tribal_council
 		puts "#{loser.name.capitalize} has been voted off the #{@merge_tribe} tribe."
 		@jury.add_member loser
 	end
 	finalists = @merge_tribe.members
-	p finalists
+	#p finalists
 	vote_results = @jury.cast_votes(finalists) #Jury members report votes
 	@jury.report_votes(vote_results) #Jury announces their votes
 	puts "Overall winner and sole survivor is .........................."

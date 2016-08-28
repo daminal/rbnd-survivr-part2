@@ -11,6 +11,6 @@ class Tribe
 		@name.light_blue
 	end
 	def tribal_council(options = {})
-		@members.reject{|mem| mem == options[:immune]}.sample
+		@members.delete(@members.reject{|mem| mem == options[:immune]}.sample)
 	end
 end
