@@ -13,9 +13,9 @@ class Jury
     		votes[finalist] = 0 
   	end
   	@members.each do |member| 
-  		vote = votes.keys.sample 
-  		puts "#{member.to_s.capitalize} voted for #{vote.to_s.capitalize}."
-  		votes[vote] += 1
+  		finalist = votes.keys.sample 
+  		puts "#{member.to_s.capitalize} voted for #{finalist.to_s.capitalize}."
+  		votes[finalist] += 1
 		end
   	return votes
   end

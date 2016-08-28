@@ -16,7 +16,7 @@ class Game
 	end
 	def merge(new_name)
 		contestants = tribes.map(&:members).flatten
-		Tribe.new(name: "new_name", members: contestants)
+		Tribe.new(name: new_name, members: contestants)
 	end
 	def individual_immunity_challenge
 		tribes[0].members.sample		
