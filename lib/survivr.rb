@@ -13,7 +13,8 @@ require 'artii'
 @coyopa = Tribe.new(name: "Pagong", members: @contestants.shift(10))
 @hunapu = Tribe.new(name: "Tagi", members: @contestants.shift(10))
 #
-# Create a new game of Survivor
+# Create a new game of Survivor. The assignment requires the game to be able to be called 
+# as '@borneo'.
 @borneo = Game.new(@coyopa, @hunapu)
 #=========================================================
 
@@ -21,41 +22,43 @@ def print_art(message)
 	a = Artii::Base.new
 	puts a.asciify(message).pink
 end
+def print_losers(losers)
+	losers.each {|loser| puts "#{loser.name.capitalize} has been voted out."}
+end
+#performs n eliminations, holding immune either 'individual' or 'tribe'.
+def eliminate(n, immunity)
+	losers = []
+	n.times do
+		losers.push @borneo.immunity_challenge.tribal_council if immunity == 'tribe'
+		losers.push @merge_tribe.tribal_council if immunity == 'individual'
+	end
+	print_losers(losers)
+	losers
+end
 def phase_one
 	print_art('Phase 1')
-	contestants_eliminated = []
-	8.times do
-		losing_tribe = @borneo.immunity_challenge
-		contestants_eliminated.push losing_tribe.tribal_council
-	end
+	losers = eliminate(8, 'tribe')
 	@merge_tribe = @borneo.merge("Cello") # After 8 eliminations, merge the two tribes together
 	@borneo.clear_tribes
 	puts "The name of the merged tribe is #{@merge_tribe}."
-	return contestants_eliminated.count
+	return losers.count
 end
 
 def phase_two
 	print_art('Phase 2')	
-	@jury = Jury.new
-	contestants_eliminated = []
-	3.times do
-		losing_contestant = @merge_tribe.tribal_council.name.capitalize
-		puts "#{losing_contestant} has been voted off the #{@merge_tribe} tribe."
-		contestants_eliminated.push losing_contestant
-	end
-	return contestants_eliminated.count
+	eliminate(3, 'individual').count
 end
 
 def phase_three
 	print_art('Phase 3')
 	@jury = Jury.new
-	7.times do
-		loser = @merge_tribe.tribal_council
-		puts "#{loser.name.capitalize} has been voted off the #{@merge_tribe} tribe."
-		@jury.add_member loser
-	end
+	# 7.times do
+	# 	loser = @merge_tribe.tribal_council
+	# 	puts "#{loser.name.capitalize} has been voted off the #{@merge_tribe} tribe."
+	# 	@jury.add_member loser
+	# end
+	eliminate(7, 'individual').each{|mem| @jury.add_member(mem)}
 	finalists = @merge_tribe.members
-	#p finalists
 	vote_results = @jury.cast_votes(finalists) #Jury members report votes
 	@jury.report_votes(vote_results) #Jury announces their votes
 	puts "Overall winner and sole survivor is .........................."

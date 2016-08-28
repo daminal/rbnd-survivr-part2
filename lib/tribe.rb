@@ -7,8 +7,9 @@ class Tribe
 		@members = options[:members]
 		puts "Tribe #{@name.light_blue} has been created"
 	end
+	#this function would return @name.light_blue to colorize tribe but tribe_test.rb prohibits it.
 	def to_s
-		@name.light_blue
+		@name
 	end
 	def tribal_council(options = {})
 		@members.delete(@members.reject{|mem| mem == options[:immune]}.sample)
