@@ -22,8 +22,9 @@ class Jury
 	def report_votes(final_votes)
 		final_votes.each{|finalist, votes| puts "#{finalist}: #{votes}"}
 	end
+	#Thanks to udacity coach for improvement in the second line in announce_winner.
 	def announce_winner(final_votes)
 		finalists = final_votes.keys
-		winner = (final_votes[finalists[0]]>final_votes[finalists[1]]) ? finalists[0] : finalists[1]
+		winner = final_votes.max_by{|finalist, votes| votes}.first
 	end
 end

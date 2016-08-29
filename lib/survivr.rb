@@ -52,11 +52,6 @@ end
 def phase_three
 	print_art('Phase 3')
 	@jury = Jury.new
-	# 7.times do
-	# 	loser = @merge_tribe.tribal_council
-	# 	puts "#{loser.name.capitalize} has been voted off the #{@merge_tribe} tribe."
-	# 	@jury.add_member loser
-	# end
 	eliminate(7, 'individual').each{|mem| @jury.add_member(mem)}
 	finalists = @merge_tribe.members
 	vote_results = @jury.cast_votes(finalists) #Jury members report votes
@@ -66,11 +61,11 @@ def phase_three
 	return @jury.members.count
 end
 
-def run
+
 phase_one
 phase_two
 phase_three
-end
+
 
 
 

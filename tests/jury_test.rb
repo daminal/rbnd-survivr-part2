@@ -3,7 +3,6 @@ require_relative "../lib/contestant"
 require_relative "../lib/jury"
 
 class TestJury < Minitest::Test
-  #Here, I'd say that the test is defining its own variables. 
   def setup
     @jury_members = %w(carlos walter aparna trinh diego juliana poornima)
     @jury_members.map!{ |member| Contestant.new(member) }

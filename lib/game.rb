@@ -1,8 +1,9 @@
 class Game
 	attr_reader :tribes
-
-	def initialize(*tribes)
-		@tribes = tribes
+	#Thanks to udacity reviewer for improvement on initialize.
+	#It used to read, @tribes = tribes. This produced @tribes = Class when only 1 tribe was passed.
+	def initialize *tribes
+	@tribes = ([] << tribes).flatten!
 	end
 	def add_tribe(tribe)
 		tribes << tribe
