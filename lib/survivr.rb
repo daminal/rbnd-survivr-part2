@@ -28,7 +28,9 @@ end
 #performs n eliminations, holding immune either 'individual' or 'tribe'.
 def eliminate(n, immunity)
 	losers = []
+		puts @borneo.immunity_challenge.class
 	n.times do
+	puts '*'*200
 		losers.push @borneo.immunity_challenge.tribal_council if immunity == 'tribe'
 		losers.push @merge_tribe.tribal_council if immunity == 'individual'
 	end
@@ -37,47 +39,38 @@ def eliminate(n, immunity)
 end
 def phase_one
 	print_art('Phase 1')
-	losers = eliminate(8, 'tribe')
-	@merge_tribe = @borneo.merge("Cello") # After 8 eliminations, merge the two tribes together
-	@borneo.clear_tribes
-	puts "The name of the merged tribe is #{@merge_tribe}."
-	return losers.count
+  8.times do
+    loser_index = @borneo.tribes.find_index(@borneo.immunity_challenge)
+    loser = @borneo.tribes[loser_index].tribal_council()
+  end
 end
 
 def phase_two
 	print_art('Phase 2')	
-	eliminate(3, 'individual').count
+  3.times do
+    immune = @borneo.individual_immunity_challenge
+    @merge_tribe.tribal_council(immune: immune)
+  end
 end
 
 def phase_three
-	print_art('Phase 3')
-	@jury = Jury.new
-	eliminate(7, 'individual').each{|mem| @jury.add_member(mem)}
-	finalists = @merge_tribe.members
-	vote_results = @jury.cast_votes(finalists) #Jury members report votes
-	@jury.report_votes(vote_results) #Jury announces their votes
-	puts "Overall winner and sole survivor is .........................."
-	puts @jury.announce_winner(vote_results).name.capitalize + "!"
-	return @jury.members.count
+	print_art('Phase 3')	
+  7.times do
+    immune = @borneo.individual_immunity_challenge
+    loser = @merge_tribe.tribal_council(immune: immune)
+    @jury.add_member(loser)
+  end
 end
-
-
-phase_one
-phase_two
-phase_three
-
-
-
 
 # If all the tests pass, the code below should run the entire simulation!!
 #=========================================================
-# phase_one #8 eliminations
-# @merge_tribe = @borneo.merge("Cello") # After 8 eliminations, merge the two tribes together
-# phase_two #3 more eliminations
-# @jury = Jury.new
-# phase_three #7 elminiations become jury members
-# finalists = @merge_tribe.members #set finalists
-# vote_results = @jury.cast_votes(finalists) #Jury members report votes
-# @jury.report_votes(vote_results) #Jury announces their votes
-# @jury.announce_winner(vote_results) #Jury announces final winner
+phase_one #8 eliminations
+@merge_tribe = @borneo.merge("Cello") # After 8 eliminations, merge the two tribes together
+phase_two #3 more eliminations
+@jury = Jury.new
+phase_three #7 elminiations become jury members
+finalists = @merge_tribe.members #set finalists
+vote_results = @jury.cast_votes(finalists) #Jury members report votes
+@jury.report_votes(vote_results) #Jury announces their votes
+@jury.announce_winner(vote_results) #Jury announces final winner
 

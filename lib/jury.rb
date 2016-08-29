@@ -20,11 +20,14 @@ class Jury
   	return votes
   end
 	def report_votes(final_votes)
-		final_votes.each{|finalist, votes| puts "#{finalist}: #{votes}"}
+		final_votes.each{|finalist, votes| puts "#{finalist.to_s.capitalize}: #{votes}"}
 	end
 	#Thanks to udacity coach for improvement in the second line in announce_winner.
 	def announce_winner(final_votes)
 		finalists = final_votes.keys
 		winner = final_votes.max_by{|finalist, votes| votes}.first
+		puts "The winner is... #{winner.to_s.capitalize}"
+		winner
 	end
 end
+
